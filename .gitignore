@@ -1,6 +1,7 @@
 # Hugo
 .hugo_build.lock
 public
+resources
 
 # Vim
 *.swp
