@@ -1,0 +1,10 @@
+# Hugo
+.hugo_build.lock
+public
+
+# Vim
+*.swp
+*.swo
+
+# JetBrains
+.idea
