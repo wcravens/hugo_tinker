@@ -7,10 +7,28 @@ title: Home
 Hello, Home.
 
 
-[Getting Setup in Hugo](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/)
+## [Getting Setup in Hugo](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/)
 
-[Layouts in Hugo](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/layouts-in-hugo/)
+Install Hugo
+```shell
+brew install hugo
+```
 
+Initialize site
+```shell
+hugo new site hugo_tinker
+cd hugo_tinker
+git init
+git add .
+git commit -m "Initialized Hugo site."
+```
+
+Run dev server
+```shell
+hugo serve -wD
+```
+
+## [Layouts in Hugo](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/layouts-in-hugo/)
 
 ### Add a home page.
 
@@ -91,3 +109,5 @@ Mimic `list.html`
 {{ .Content }}
 {{ end }}
 ```
+
+## [Hugo Partials](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/hugo-partials/)
