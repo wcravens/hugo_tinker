@@ -248,3 +248,11 @@ See the [templating documentation](https://cloudcannon.com/community/learn/hugo-
 ```handlebars
 {{ printf "%#v" $.Site }}
 ```
+
+## [Blogging in Hugo; Temporal Content and Listing](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/blogging-in-hugo/)
+
+Todo
+
+## [Using Data with Hugo](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/blogging-in-hugo/)
+
+Todo
