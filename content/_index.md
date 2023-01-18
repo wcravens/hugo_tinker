@@ -143,3 +143,108 @@ Update `baseof.html`. Pay attention to the `.`.  This passes the current page co
 ```handlebars
 {{ partial "head.html" . }}
 ```
+
+## [Hugo Templating Basics](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/hugo-templating-basics/)
+
+Output a string:
+```
+{{ "Hello" }}
+```
+
+Output from front matter:
+
+```
+{{ .Params.title }}
+```
+
+Output from site config:
+```
+{{ .Site.title }}
+```
+
+Conditions: 
+```
+{{ .Params.title | .Site.title }}
+{{ if isset .Params "title" }}
+  <title>{{ .Params.title }}</title>
+{{ else }}
+  <title>{{ .Site.title }}</title>
+{{ end }}
+```
+
+Setting and evaluating variables:
+```handlebars
+{{ $favorite_food := "Pizza" }}
+{{ $favorite_food }}
+```
+
+Looping:
+```handlebars
+{{ $friends := slice "bob" "alice" "bill" "ted" }}
+<ul>
+{{ range $friends }}
+  <li>{{ . }}</li>
+{{ end }}
+</ul>
+```
+
+Nested Key Values:
+- Content:
+```yaml
+---
+title: Appearance
+apperance:
+  eyes: green
+  snoot: boopable
+  whiskers: true
+  limbs:
+    - claws: 5
+      side: left
+      position: front
+    - claws: 4
+      side: right
+      position: front
+    - claws: 3
+      side: left
+      position: back
+    - claws: 5
+      side: right
+      position: back
+---
+```
+
+Layout; use `with` to create namespace context for `.`:
+```handlebars
+{{ with .Params.appearance }}
+<h3>My top appearance traits</h3>
+<dl>
+	<dt>Eyes</dt>
+  <dd>{{ .eyes }}</dd>
+
+  <dt>Snoot</dt>
+  <dd>{{ .snoot }}</dd>
+
+  <dt>Whiskers</dt>
+  <dd>{{ .whiskers }}</dd>
+	
+	{{ with .limbs }}
+    <dt>Claws</dt>
+    <dd>
+	    <ul>
+      {{ range . }}
+        <li>{{ .position }} {{ .side }} {{ .claws }</li>
+      {{ end }}
+      </ul>
+    </dd>
+  {{ end }}
+</dl>
+{{ end }}
+```
+
+See the [templating documentation](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/hugo-templating-basics/#:~:text=templating%20documentation) for more information.
+
+### [Template Debugging](https://gohugo.io/templates/template-debugging/)
+
+```handlebars
+{{ printf "%#v" $.Site }}
+```

@@ -1,0 +1,7 @@
+{{ with .Params.hide_footer }}
+<!-- No footer -->
+{{ else }}
+  <footer>
+    {{ .Site.Title }}, Author {{ .Site.Author.name }} (c) {{ now.Year }}
+  </footer>
+{{ end }}
