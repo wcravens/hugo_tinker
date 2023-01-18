@@ -314,4 +314,58 @@ Update the Nav bar to include the Notes section.
 
 ## [Using Data with Hugo](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/blogging-in-hugo/)
 
-Todo
+Create a demo data file.
+`data/vacations_spots.yaml`
+```yaml
+- name: Masai Mara National Reserve
+  latitude: -1.484751
+  longitude: 35.101904
+- name: Serengeti National Park
+  latitude: -2.333333
+  longitude: 34.833332
+...
+```
+
+[Shortcodes](https://gohugo.io/content-management/shortcodes/) are similar to partials, except we can use them in
+content files. There are many already [build in](https://gohugo.io/content-management/shortcodes/#use-hugos-built-in-shortcodes).
+
+Create a custom shortcode.
+
+`layouts/shortcodes/vacation_spots.html`
+```handlebars
+<div id="map">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" crossorigin="" />d
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    let markers = {{ $.Site.Data.vaction_spots }};
+  </script>
+  <script src="/map.js"></script>
+</div>
+```
+
+Add the `map.js` file to control our map.
+`static/map.js`
+```javascript
+const map = L.map('map');
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'})
+  .addTo(map);
+
+let bounds = [];
+for (let i = 0; i < markers.length; i++ ) {
+  const marker = L.marker([markers[i].latitude, markers[i].longitude]).addTo(map);
+  marker.bindPopup(markers[i].name);
+  bounds.push([markers[i].latitude, markers[i].longitude]);
+}
+
+map.fitBounds(bounds);
+```
+
+Add the shortcode to the About page.
+
+`content/about.md`
+```handlebars
+{{< vacation_spots >}}
+```
+
