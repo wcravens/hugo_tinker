@@ -26,6 +26,8 @@ git commit -m "Initialized Hugo site."
 Run dev server
 ```shell
 hugo serve -wD
+# or
+open http://localhost:1313/ && hugo server -wD --navigateToChanged
 ```
 
 ## [Layouts in Hugo](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/layouts-in-hugo/)
@@ -251,7 +253,64 @@ See the [templating documentation](https://cloudcannon.com/community/learn/hugo-
 
 ## [Blogging in Hugo; Temporal Content and Listing](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/blogging-in-hugo/)
 
-Todo
+Create a section for notes.  `content/notes/_index.html`
+```handlebars
+---
+title: Notes
+---
+```
+
+Create a `list` template specifically for the notes section.
+
+`layouts/notes/list.html`
+```handlebars
+{{ define "main" }}
+  <h1>My Notes</h1>
+  <ul>
+    {{ range .Pages }}
+      <li>
+          <a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .Date.Format "Jan 2, 2006" }}
+      </li>
+    {{ end }}
+  </ul>
+{{ end }}
+```
+
+A list page will have an array of all children pages accessible via the `.Pages` variable.
+
+`.Date.Format "Jan 2, 2006"` is Go's quirky way of formatting dates.
+
+`.Permalink` retrieves the actual URL for a page.
+
+Add a few notes.  Set both `title` and `date` in the front matter.
+```shell
+content/notes/20230116-deeper-down-deep-deeper-down.md
+content/notes/20230117-back-in-time.md
+content/notes/20230118-my-first-note.md
+```
+
+Create a `single` template specifically for individual `notes` pages.
+
+```layouts/notes/single.html```
+```handlebars
+{{ define "main" }}
+  <h1>{{ .Params.Title }}</h1>
+  <p>{{ .Date.Format "Jan 02, 2006" }}</p>
+  {{ .Content }}
+{{ end }}
+```
+
+Update the Nav bar to include the Notes section.
+`layouts/partials/nav.html`
+```handlebars
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/notes/">Notes</a></li>
+    <li><a href="/about/">About</a></li>
+  </ul>
+</nav>
+```
 
 ## [Using Data with Hugo](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/blogging-in-hugo/)
 
