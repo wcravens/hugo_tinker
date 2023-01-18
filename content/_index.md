@@ -103,7 +103,7 @@ Update list to just fill in the base template.
 ```
 
 Mimic `list.html`
-```/layouts/_default/single.html```
+`/layouts/_default/single.html`
 ```handlebars
 {{ define "main" }}
 {{ .Content }}
@@ -111,3 +111,35 @@ Mimic `list.html`
 ```
 
 ## [Hugo Partials](https://cloudcannon.com/community/learn/hugo-beginner-tutorial/hugo-partials/)
+
+### Add a partial for navigation.
+`/layouts/partials/nav.html`
+```handlebars
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+  </ul>
+</nav>
+```
+
+Update `baseof.html`
+```handlebars
+  {{ partial "nav.html" }}
+```
+
+### Extract head into partial.
+
+Move `<head>` content  from `baseof.html` to `/layouts/partials/head.html`.
+
+```handlebars
+<meta charset="utf-8">
+<title>{{ .Page.Title }}</title>
+{{ $style := resources.Get "sass/main.scss" | resources.ToCSS | resources.Minify }}
+<link rel="stylesheet" href="{{ $style.Permalink }}">
+```
+
+Update `baseof.html`. Pay attention to the `.`.  This passes the current page context to the partial.
+```handlebars
+{{ partial "head.html" . }}
+```
